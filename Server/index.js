@@ -21,6 +21,8 @@ dotenv.config({ path: path.join(__dirname, '.env') });
 dotenv.config();
 const app = express();
 
+const clientOrigin = process.env.CLIENT_URL || 'http://localhost:5173';
+
 // Connect Express to MongoDB through Mongoose models.
 mongoose.connect(process.env.dbUrl).then(()=>console.log("DB Connected")).catch((error)=>console.error(error))
 
@@ -28,7 +30,7 @@ mongoose.connect(process.env.dbUrl).then(()=>console.log("DB Connected")).catch(
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: clientOrigin,
     credentials: true,
 }));
 
@@ -42,6 +44,7 @@ app.use('/orders', orderRoutes)
 
 
 // Start the API server that the React app calls through axios.
-app.listen(8001, ()=>{
-    console.log('Server started on port 8001');
+const port = Number(process.env.PORT) || 8001;
+app.listen(port, '0.0.0.0', ()=>{
+    console.log(`Server started on port ${port}`);
 })

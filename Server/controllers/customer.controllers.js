@@ -3,8 +3,12 @@ import bcrypt from 'bcrypt';
 import {genToken} from '../utils/generateToken.js';
 
 
-const cookieOptions = {httpOnly:true,
-}
+const isProduction = process.env.NODE_ENV === 'production';
+const cookieOptions = {
+    httpOnly: true,
+    secure: isProduction,
+    sameSite: isProduction ? 'none' : 'lax',
+};
 
 export const registerCustomer = async (req, res) => {
     const {fullName, email, password, phone} = req.body;
