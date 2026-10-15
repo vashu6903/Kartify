@@ -1,0 +1,17 @@
+# Dependencies and generated build output
+**/node_modules/
+**/dist/
+**/dist-ssr/
+coverage/
+*.local
+
+# Local credentials and environment files
+.env
+.env.*
+!**/.env.example
+
+# Local-only files and logs
+cart-cookies.txt
+logs/
+*.log
+.DS_Store
